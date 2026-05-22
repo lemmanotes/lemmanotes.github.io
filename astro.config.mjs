@@ -10,26 +10,29 @@ export default defineConfig({
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
-			provider: fontProviders.local(),
-			name: 'Atkinson',
-			cssVariable: '--font-atkinson',
-			fallbacks: ['sans-serif'],
-			options: {
-				variants: [
-					{
-						src: ['./src/assets/fonts/atkinson-regular.woff'],
-						weight: 400,
-						style: 'normal',
-						display: 'swap',
-					},
-					{
-						src: ['./src/assets/fonts/atkinson-bold.woff'],
-						weight: 700,
-						style: 'normal',
-						display: 'swap',
-					},
-				],
-			},
+			provider: fontProviders.google(),
+			name: 'Inter',
+			cssVariable: '--font-inter',
+			fallbacks: [
+				'system-ui',
+				'-apple-system',
+				'Segoe UI',
+				'Helvetica',
+				'Arial',
+				'sans-serif',
+			],
+			weights: [400, 600, 700],
+			styles: ['normal'],
+			subsets: ['latin'],
+		},
+		{
+			provider: fontProviders.google(),
+			name: 'JetBrains Mono',
+			cssVariable: '--font-mono',
+			fallbacks: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+			weights: [400, 600],
+			styles: ['normal'],
+			subsets: ['latin'],
 		},
 	],
 });
