@@ -19,8 +19,8 @@
 	--space-12: calc(var(--baseline) * 12); /* 96px */
 	--space-16: calc(var(--baseline) * 16); /* 128px */
 
-	/* Layout */
-	--content-max: 680px;
+	/* Layout 680 */
+	--content-max: 100%;
 	--page-margin: var(--space-4);
 
 	/* Colors */
@@ -130,6 +130,7 @@ h6 {
 }
 
 p {
+	max-width: 680px;
 	margin: 0 0 var(--space-3) 0;
 }
 
@@ -242,7 +243,7 @@ header nav {
 	align-items: baseline;
 	justify-content: space-between;
 	gap: var(--space-4);
-	max-width: 1280px;
+	max-width: 1280px; /* 12080 */
 }
 
 header .site-title {
