@@ -1,0 +1,32 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="de">
+	<head>
+		<BaseHead
+			title={`404 — ${SITE_TITLE}`}
+			description="Diese Seite ist nicht definiert."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>404</h1>
+			<p>
+				Diese Seite ist nicht definiert. Vielleicht ein Tippfehler in
+				der URL, vielleicht ein Artikel, der noch nicht (oder nicht
+				mehr) existiert.
+			</p>
+			<p>
+				<a href="/">Zurück zur Startseite</a> oder
+				<a href="/blog/">zur Artikel-Übersicht</a>.
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>
