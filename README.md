@@ -112,5 +112,6 @@ The visual system follows the Swiss / International Typographic Style: a single 
 
 ## License
 
-Code: MIT.
-Content: all rights reserved.
+**Code** (everything outside `src/content/`): [MIT](LICENSE). Copy, modify, learn from it. If you use this setup as a starting point for your own site, no need to credit — though a link back is nice.
+
+**Articles** in `src/content/blog/`: [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0). Share them, translate them, build on them, even commercially — just credit Lemma and link back. Republishing is encouraged.
