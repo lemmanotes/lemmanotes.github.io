@@ -2,7 +2,6 @@
 title: 'Was der Sinus wirklich ist'
 description: 'Warum Sinus gleichzeitig ein Verhältnis, eine mathematische Funktion und eine Welle ist – und warum das die falsche Frage ist.'
 pubDate: '2026-05-23'
-draft: true
 ---
 
 Jeder lernt ihn in der Schule, kaum jemand versteht ihn intuitiv: den Sinus. Unverzichtbar für die Naturwissenschaften, aber meistens trocken serviert. Ein Erklärungsversuch ohne Auswendiglernen.
