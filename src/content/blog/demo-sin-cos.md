@@ -2,6 +2,7 @@
 title: 'Was Sinus wirklich ist (Demo)'
 description: 'Demo-Artikel zur Formatierung – Mathe, Plots, Grafiken.'
 pubDate: '2026-05-22'
+draft: true
 ---
 
 Sin, cos und tan sind doch eigentlich nur Verhältnisse in einem Dreieck. 
