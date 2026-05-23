@@ -1,63 +1,116 @@
-# Astro Starter Kit: Blog
+# Lemma
+
+Notes on mathematics, physics, and electrical engineering. Built with Astro, deployed to GitHub Pages.
+
+Live: <https://lemmanotes.github.io>
+
+## Stack
+
+- [Astro 6](https://astro.build/) — static site generator
+- `remark-math` + `rehype-katex` — LaTeX-style math in Markdown
+- Inter + JetBrains Mono (via Google Fonts) — typography
+- GitHub Actions + GitHub Pages — deployment
+
+## Local development
 
 ```sh
-npm create astro@latest -- --template blog
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # outputs to dist/
+npm run preview  # serve the production build locally
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Requires Node 22.12 or newer (see `engines` in [package.json](package.json)).
 
-Features:
+## Adding an article
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+Create a `.md` or `.mdx` file in [src/content/blog/](src/content/blog/):
 
-## 🚀 Project Structure
+```md
+---
+title: 'Spannungsteiler'
+description: 'Warum Spannungsteiler eigentlich Strom-Teiler sind.'
+pubDate: '2026-05-30'
+draft: false
+---
 
-Inside of your Astro project, you'll see the following folders and files:
+Body text. Inline math with `$\sin^2(x) + \cos^2(x) = 1$`,
+block math with `$$ \int_0^\infty e^{-x^2}\,dx = \frac{\sqrt{\pi}}{2} $$`.
+```
 
-```text
-├── public/
+### Frontmatter
+
+The schema lives in [src/content.config.ts](src/content.config.ts):
+
+| Field | Required | Notes |
+|---|---|---|
+| `title` | yes | Article title |
+| `description` | yes | Meta tag + blog index excerpt |
+| `pubDate` | yes | `YYYY-MM-DD`; rendered as `DD. Monat YYYY` |
+| `updatedDate` | no | Same format |
+| `heroImage` | no | Imported from `src/assets/` (processed by Astro) |
+| `draft` | no | `true` keeps the post out of the production build but visible in `npm run dev` |
+
+### Drafts
+
+Set `draft: true` to keep an article private:
+
+- `npm run dev` → draft is visible (so you can preview it)
+- `npm run build` / GitHub Pages → draft is filtered out of the blog index, RSS feed, and not generated as a page
+
+The filter is implemented in [src/pages/blog/index.astro](src/pages/blog/index.astro), [src/pages/blog/[...slug].astro](src/pages/blog/[...slug].astro), and [src/pages/rss.xml.js](src/pages/rss.xml.js).
+
+## Deployment
+
+Every push to `master` triggers [.github/workflows/deploy.yml](.github/workflows/deploy.yml), which runs [`withastro/action@v3`](https://github.com/withastro/action) on Node 22 and publishes `dist/` to GitHub Pages.
+
+To deploy: just push.
+
+```sh
+git commit -am "New article: foo"
+git push
+```
+
+GitHub Pages setting (one-time, already configured): Settings → Pages → Source = "GitHub Actions".
+
+## Project structure
+
+```
+.
+├── .github/workflows/   CI: deploy.yml
+├── public/              Static assets served as-is
+│   ├── favicon.ico/.svg Lambda glyph
+│   └── og.png           1200x630 social card
+├── scripts/             Build-time asset generators
+│   ├── build-favicon.mjs   SVG → multi-size ICO
+│   └── build-og.mjs        SVG → 1200x630 PNG
 ├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+│   ├── assets/          Images imported by articles
+│   ├── components/      BaseHead, Header, Footer, FormattedDate, HeaderLink
+│   ├── content/blog/    Markdown/MDX articles
+│   ├── layouts/         BlogPost.astro
+│   ├── pages/           Routes: /, /about, /blog/, /blog/[slug], /404
+│   └── styles/global.css   Single source of truth for all styling
+├── astro.config.mjs     Astro config (integrations, fonts, math plugins)
+└── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+All styling lives in [src/styles/global.css](src/styles/global.css). Design tokens (colors, type scale, spacing on an 8 px baseline) are CSS variables on `:root`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Regenerating favicon and OG image
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+The favicon and OG image are PNGs generated from inline SVGs by build scripts. Re-run after changing the source:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```sh
+node scripts/build-favicon.mjs   # → public/favicon.ico
+node scripts/build-og.mjs        # → public/og.png
+```
 
-## 🧞 Commands
+## Design
 
-All commands are run from the root of the project, from a terminal:
+The visual system follows the Swiss / International Typographic Style: a single sans-serif (Inter), strict left alignment, baseline grid of 8 px, restrained palette (black `#111`, white `#FFF`, one red accent `#E30613` reserved for links), no shadows, no gradients, no rounded corners.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## License
 
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Code: MIT.
+Content: all rights reserved.
